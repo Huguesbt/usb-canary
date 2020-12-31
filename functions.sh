@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-function send_slack(){
+send_slack(){
     message="$1"
     if [[ -z ${SLACK_URL+x} ]] || \
         [[ "$message" == "" ]]; then
@@ -25,7 +25,7 @@ function send_slack(){
     curl -X POST -H 'Content-type: application/json' --silent --data "$data" "$SLACK_URL"
 }
 
-function send_twilio(){
+send_twilio(){
     message="$1"
     if [[ -z ${TWILIO_FROM+x} ]] || \
         [[ -z ${TWILIO_TO+x} ]] || \
@@ -50,14 +50,14 @@ send_notif() {
     fi
 }
 
-function alert {
+alert() {
     echo "$1"
     if [[ ! -z ${TWILIO+x} ]] && [[ "$TWILIO" == "1" ]]; then send_twilio "$1"; fi
     if [[ ! -z ${SLACK+x} ]] && [[ "$SLACK" == "1" ]]; then send_slack "$1"; fi
     if [[ ! -z ${NOTIF+x} ]] && [[ "$NOTIF" == "1" ]]; then send_notif "$1"; fi
 }
 
-function exit_canary {
+exit_canary() {
   alert "EXIT from USB CANARY on $HOSTNAME"
   exit
 }

@@ -47,9 +47,9 @@ do
     command -v xprintidle && [[ "$(xprintidle)" -gt "60000" ]] && AWAY=1
     command -v xscreensaver-command && xscreensaver-command -time && AWAY=1
     # Screensaver enabled
-    qdbus org.freedesktop.ScreenSaver /ScreenSaver org.freedesktop.ScreenSaver.GetActive && AWAY=1
-    qdbus org.kde.screensaver /ScreenSaver org.freedesktop.ScreenSaver.GetActive && AWAY=1
-    qdbus org.gnome.ScreenSaver /ScreenSaver org.gnome.ScreenSaver.GetActive && AWAY=1
+    [[ $(qdbus org.freedesktop.ScreenSaver /ScreenSaver org.freedesktop.ScreenSaver.GetActive) ]] && AWAY=1
+    [[ $(qdbus org.kde.screensaver /ScreenSaver org.freedesktop.ScreenSaver.GetActive) ]] && AWAY=1
+    [[ $(qdbus org.gnome.ScreenSaver /ScreenSaver org.gnome.ScreenSaver.GetActive) ]] && AWAY=1
   fi
 
   if [[ "$DEVICES" != "" ]] && { [[ "$PARANOID" -gt "0" ]] || [[ "$AWAY" -gt "0" ]]; }; then
