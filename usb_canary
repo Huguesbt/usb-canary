@@ -35,7 +35,7 @@ while true; do
     pgrep -q ScreenSaverEngine > /dev/null && AWAY=1
   elif [[ ${OS} = 'Linux' ]]; then
     NEW_DEVICES=$(lsusb)
-    if [[ "$(ls /sys/class/drm/*/status)" != "" ]]; then
+    if [[ "$(ls /sys/class/drm/*/status 2>/dev/null)" != "" ]]; then
       # Idle for 1 minute
       command -v gnome-screensaver-command -q 2>/dev/null | grep -w -c inactive && AWAY=1
       command -v xprintidle && [[ "$(xprintidle)" -gt "60000" ]] && AWAY=1
